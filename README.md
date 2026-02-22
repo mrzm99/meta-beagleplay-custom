@@ -1,4 +1,3 @@
-### セットアップ
 pocky取得
 ```
 git clone -b scarthgap git://git.yoctoproject.org/poky
