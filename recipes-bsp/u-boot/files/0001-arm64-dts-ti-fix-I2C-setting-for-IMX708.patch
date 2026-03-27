@@ -1,0 +1,69 @@
+From 0a09c9211427585de2d6b1493062d0c6d4cb5ce6 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 15:28:16 +0900
+Subject: [PATCH] arm64: dts: ti: fix I2C setting for IMX708
+
+---
+ .../src/arm64/ti/k3-am625-beagleplay.dts      | 42 +++++++++----------
+ 1 file changed, 20 insertions(+), 22 deletions(-)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index b8057e68bba..6ad0edb6972 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -558,6 +558,26 @@
+ 	pinctrl-0 = <&i2c_csi_pins_default>;
+ 	clock-frequency = <400000>;
+ 	/* Enable with overlay for camera sensor */
++
++    status = "okay";
++
++    imx708: camera@1a {
++        compatible = "sony,imx708";
++        reg = <0x1a>;
++
++        clocks = <&imx708_clk>;
++        clock-names = "inclk";
++
++        reset-gpios = <&main_gpio0 11 GPIO_ACTIVE_LOW>;
++
++        port {
++            imx708_to_csi: endpoint {
++                remote-endpoint = <&csi2rx_from_imx708>;
++                data-lanes = <1 2>;
++                link-frequencies = /bits/ 64 <450000000>;
++            };
++        };
++    };
+ };
+ 
+ &mcu_i2c0 {
+@@ -952,28 +972,6 @@
+ 	pinctrl-0 = <&mikrobus_pwm_pins_default>;
+ };
+ 
+-&main_i2c2 {
+-    imx708: camera@1a {
+-        compatible = "sony,imx708";
+-        reg = <0x1a>;
+-
+-        /* BeaglePlayからのクロック出力は不要なので固定クロックを指定 */
+-        clocks = <&imx708_clk>;
+-        clock-names = "inclk";
+-
+-        /* ここから電気信号が出力されるようになったのが最大の進歩です！ */
+-        reset-gpios = <&main_gpio0 11 GPIO_ACTIVE_LOW>;
+-
+-        port {
+-            imx708_to_csi: endpoint {
+-                remote-endpoint = <&csi2rx_from_imx708>;
+-                data-lanes = <1 2>;
+-                link-frequencies = /bits/ 64 <450000000>;
+-            };
+-        };
+-    };
+-};
+-
+ &cdns_csi2rx0 {
+     status = "okay";
+     ports {

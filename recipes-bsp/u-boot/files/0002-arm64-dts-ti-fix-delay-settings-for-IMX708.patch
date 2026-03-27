@@ -1,0 +1,22 @@
+From 0130c51df1c8278d3e6d2c378617b9317003f2a8 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 16:25:00 +0900
+Subject: [PATCH] arm64: dts: ti: fix delay settings for IMX708
+
+---
+ dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 6e61568f970..572bb2c2eb5 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -242,8 +242,6 @@
+         regulator-max-microvolt = <3300000>;
+         gpio = <&main_gpio0 12 GPIO_ACTIVE_HIGH>;
+         enable-active-high;
+-        regulator-always-on;
+-        regulator-boot-on;
+ 
+         startup-delay-us = <500000>;
+     };

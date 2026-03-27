@@ -1,0 +1,43 @@
+From 5be400c9e50ff59466e5307820c203fd527139c8 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 15:57:52 +0900
+Subject: [PATCH] arm64: dts: ti: fix voltage settings for IMX708
+
+---
+ .../src/arm64/ti/k3-am625-beagleplay.dts         | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 6ad0edb6972..00f36f7cbba 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -235,6 +235,17 @@
+ 		};
+ 	};
+ 
++    camera_pwren: regulator-camera-pwren {
++        compatible = "regulator-fixed";
++        regulator-name = "camera_pwren";
++        regulator-min-microvolt = <3300000>;
++        regulator-max-microvolt = <3300000>;
++        gpio = <&main_gpio0 12 GPIO_ACTIVE_HIGH>;
++        enable-active-high;
++        regulator-always-on;
++        regulator-boot-on;
++    };
++
+     imx708_clk: camera_clk {
+         compatible = "fixed-clock";
+         #clock-cells = <0>;
+@@ -570,6 +581,11 @@
+ 
+         reset-gpios = <&main_gpio0 11 GPIO_ACTIVE_LOW>;
+ 
++        vana1-supply = <&camera_pwren>;
++        vana2-supply = <&camera_pwren>;
++        vdig-supply = <&camera_pwren>;
++        vddl-supply = <&camera_pwren>;
++
+         port {
+             imx708_to_csi: endpoint {
+                 remote-endpoint = <&csi2rx_from_imx708>;

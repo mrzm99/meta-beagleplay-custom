@@ -1,0 +1,22 @@
+From 74569eef602bff88a8618dc8cf72e3394cc8a5da Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 16:36:46 +0900
+Subject: [PATCH] arm64: dts: ti: fix delay time for IMX708
+
+---
+ dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 572bb2c2eb5..ee5483b8eef 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -243,7 +243,7 @@
+         gpio = <&main_gpio0 12 GPIO_ACTIVE_HIGH>;
+         enable-active-high;
+ 
+-        startup-delay-us = <500000>;
++        startup-delay-us = <1000000>;
+     };
+ 
+     imx708_clk: camera_clk {

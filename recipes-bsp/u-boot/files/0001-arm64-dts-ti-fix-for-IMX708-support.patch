@@ -1,0 +1,62 @@
+From b1e48a91dc6ca7c26abbaa23ea9b552ae914dd66 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 14:34:25 +0900
+Subject: [PATCH] arm64: dts: ti: fix for IMX708 support
+
+---
+ .../src/arm64/ti/k3-am625-beagleplay.dts      | 31 +++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 72b09f9c69d..9d43a8f2479 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -235,6 +235,11 @@
+ 		};
+ 	};
+ 
++    imx708_clk: camera_clk {
++        compatible = "fixed-clock";
++        #clock-cells = <0>;
++        clock-frequency = <24000000>;
++    };
+ };
+ 
+ &main_pmx0 {
+@@ -249,8 +254,8 @@
+ 			AM62X_IOPAD(0x0018, PIN_INPUT, 7) /* (F24) OSPI0_D3.GPIO0_6 */
+ 			AM62X_IOPAD(0x0024, PIN_INPUT, 7) /* (H25) OSPI0_D6.GPIO0_9 */
+ 			AM62X_IOPAD(0x0028, PIN_INPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
+-			AM62X_IOPAD(0x002c, PIN_INPUT, 7) /* (F23) OSPI0_CSn0.GPIO0_11 */
+-			AM62X_IOPAD(0x0030, PIN_INPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
++			AM62X_IOPAD(0x002c, PIN_OUTPUT, 7) /* (F23) OSPI0_CSn0.GPIO0_11 */
++			AM62X_IOPAD(0x0030, PIN_OUTPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
+ 			AM62X_IOPAD(0x0034, PIN_INPUT, 7) /* (H21) OSPI0_CSn2.GPIO0_13 */
+ 			AM62X_IOPAD(0x0038, PIN_INPUT, 7) /* (E24) OSPI0_CSn3.GPIO0_14 */
+ 			AM62X_IOPAD(0x00a4, PIN_INPUT, 7) /* (M22) GPMC0_DIR.GPIO0_40 */
+@@ -946,3 +951,25 @@
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&mikrobus_pwm_pins_default>;
+ };
++
++&main_i2c2 {
++    imx708: camera@1a {
++        compatible = "sony,imx708";
++        reg = <0x1a>;
++
++        /* BeaglePlayからのクロック出力は不要なので固定クロックを指定 */
++        clocks = <&imx708_clk>;
++        clock-names = "inclk";
++
++        /* ここから電気信号が出力されるようになったのが最大の進歩です！ */
++        reset-gpios = <&main_gpio0 11 GPIO_ACTIVE_LOW>;
++
++        port {
++            imx708_to_csi: endpoint {
++                remote-endpoint = <&csi2rx_from_imx708>;
++                data-lanes = <1 2>;
++                link-frequencies = /bits/ 64 <450000000>;
++            };
++        };
++    };
++};

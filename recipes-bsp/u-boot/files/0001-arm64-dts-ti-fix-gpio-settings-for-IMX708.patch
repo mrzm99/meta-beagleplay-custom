@@ -1,0 +1,46 @@
+From 8d42de8f7b03cc83fa230533b5a3155c4ad7b3b4 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 16:52:43 +0900
+Subject: [PATCH] arm64: dts: ti: fix gpio settings for IMX708
+
+---
+ .../src/arm64/ti/k3-am625-beagleplay.dts      | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index ee5483b8eef..04b9972eb53 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -581,11 +581,6 @@
+ 
+         reset-gpios = <&main_gpio0 11 GPIO_ACTIVE_LOW>;
+ 
+-        vana1-supply = <&camera_pwren>;
+-        vana2-supply = <&camera_pwren>;
+-        vdig-supply = <&camera_pwren>;
+-        vddl-supply = <&camera_pwren>;
+-
+         port {
+             imx708_to_csi: endpoint {
+                 remote-endpoint = <&csi2rx_from_imx708>;
+@@ -681,6 +676,20 @@
+ 		"", "", "", "", "", "",				/* 79-84 */
+ 		"BITBANG_MDIO_DATA", "BITBANG_MDIO_CLK",	/* 85-86 */
+ 		"", "", "", "", "";				/* 87-91 */
++    camera_reset_hog {
++        gpio-hog;
++        gpios = <11 GPIO_ACTIVE_HIGH>;
++        output-high;
++        line-name = "camera_reset_hog";
++    };
++
++    /* 追記：12番ピンをOS起動時から強制HIGHに固定する */
++    camera_power_hog {
++        gpio-hog;
++        gpios = <12 GPIO_ACTIVE_HIGH>;
++        output-high;
++        line-name = "camera_power_hog";
++    };
+ };
+ 
+ &main_gpio1 {

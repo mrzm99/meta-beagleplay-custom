@@ -1,0 +1,25 @@
+From 1d65efa410e8d84392a41b24f8978163f5310a38 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 18:02:13 +0900
+Subject: [PATCH] arm64: dts: ti: add dphy csi-2 settings
+
+---
+ dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 04b9972eb53..29cdf3817d1 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -1012,3 +1012,11 @@
+         };
+     };
+ };
++
++&dphy0 {
++    status = "okay";
++};
++
++&ti_csi2rx0 {
++    status = "okay";
++};

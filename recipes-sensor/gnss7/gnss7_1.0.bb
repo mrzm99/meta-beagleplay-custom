@@ -1,23 +1,31 @@
-SUMMARY = "I2C GNSS 7 Click Reader Application"
-DESCRIPTION = ""
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
-
-RDEPENDS:${PN} += "i2c-tools"
+SUMMARY = "GNSS Sensor Library"
+LICENSE = "CLOSED"
 
 SRC_URI = " \
     file://gnss.c \
-    file://Makefile \
+    file://gnss.h \
 "
+
+# 依存ライブラリ
+DEPENDS = "curl cjson"
 
 S = "${WORKDIR}"
 
-EXTRA_OEMAKE = "'CC=${CC}' 'CFLAGS=${CFLAGS}' 'LDFLAGS=${LDFLAGS}'"
+do_configure[noexec] = "1"
+
+# 共有ライブラリとしてコンパイル
 do_compile() {
-    oe_runmake
+    ${CC} ${CFLAGS} ${LDFLAGS} -shared -fPIC -o libgnss.so gnss.c -lcurl -lcjson
 }
 
+# インストール
 do_install() {
-    install -d ${D}${bindir}
-    install -m 0755 ${S}/gnss ${D}${bindir}/
+    install -d ${D}${libdir}
+    install -m 0755 libgnss.so ${D}${libdir}
+
+    install -d ${D}${includedir}
+    install -m 0644 gnss.h ${D}${includedir}
 }
+
+FILES:${PN} += "${libdir}/libgnss.so"
+FILES_SOLIBSDEV = ""

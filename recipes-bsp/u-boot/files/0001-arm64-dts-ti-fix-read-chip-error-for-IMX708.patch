@@ -1,0 +1,31 @@
+From cc4bc254bb2cb4af521adee2ceeb8b406a1c7f55 Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 16:10:50 +0900
+Subject: [PATCH] arm64: dts: ti: fix read chip error for IMX708
+
+---
+ dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 00f36f7cbba..6e61568f970 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -244,6 +244,8 @@
+         enable-active-high;
+         regulator-always-on;
+         regulator-boot-on;
++
++        startup-delay-us = <500000>;
+     };
+ 
+     imx708_clk: camera_clk {
+@@ -567,7 +569,7 @@
+ &wkup_i2c0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c_csi_pins_default>;
+-	clock-frequency = <400000>;
++	clock-frequency = <100000>;
+ 	/* Enable with overlay for camera sensor */
+ 
+     status = "okay";

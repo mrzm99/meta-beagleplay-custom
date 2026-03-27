@@ -1,0 +1,33 @@
+From 3fd94f0ee6e09a9b7aa9b82cf524fb279505728a Mon Sep 17 00:00:00 2001
+From: mrzm99 <mrzm.cpp@gmail.com>
+Date: Sun, 22 Mar 2026 14:56:21 +0900
+Subject: [PATCH] arm64: dts: ti: add cdns_csi2rx0 node
+
+---
+ .../src/arm64/ti/k3-am625-beagleplay.dts         | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+index 9d43a8f2479..418b44e52bf 100644
+--- a/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
++++ b/dts/upstream/src/arm64/ti/k3-am625-beagleplay.dts
+@@ -973,3 +973,19 @@
+         };
+     };
+ };
++
++&cdns_csi2rx0 {
++    status = "okay";
++    ports {
++        #address-cells = <1>;
++        #size-cells = <0>;
++        port@0 {
++            reg = <0>;
++            csi2rx_from_imx708: endpoint {
++                remote-endpoint = <&imx708_to_csi>;
++                data-lanes = <1 2>;
++                bus-type = <4>; /* MIPI CSI-2 D-PHY */
++            };
++        };
++    };
++};
