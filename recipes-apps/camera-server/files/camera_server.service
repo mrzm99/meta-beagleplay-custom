@@ -1,0 +1,12 @@
+[Unit]
+Description=Camera Streaming and GNSS Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/camera_server
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
