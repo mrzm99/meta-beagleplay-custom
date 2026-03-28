@@ -1,7 +1,6 @@
 # BeaglePlay GNSS & IMX708 Streaming Server
 
-![動作イメージ](docs/sample.png)
-*(※ここに、カメラから映像を取得し、GNSSデータをマージしてTCP配信するまでの全体構成図や、実際にストリーミングしている画面のスクリーンショットを配置します)*
+![動作イメージ](doc/sample.png)
 
 ## 概要 (Overview)
 本プロジェクトは、C言語で独自開発された低遅延なカメラストリーミング・GNSS連携サーバです。
